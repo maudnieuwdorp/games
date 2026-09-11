@@ -9,17 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
- public function up()
-{
-    Schema::create('games', function (Blueprint $table) {
-        $table->increments('id');
-        $table->string('game_name');
-        $table->string('platform');
-        $table->string('genre');
-        $table->decimal('rating', 3, 1);
-        $table->timestamps();
-    });
-}
+    public function up(): void
+    {
+        Schema::create('jobs', function (Blueprint $table) {
+            $table->id();
+            $table->string('queue')->index();
+            $table->longText('payload');
+            $table->unsignedTinyInteger('attempts');
+            $table->unsignedInteger('reserved_at')->nullable();
+            $table->unsignedInteger('available_at');
+            $table->unsignedInteger('created_at');
+        });
 
         Schema::create('job_batches', function (Blueprint $table) {
             $table->string('id')->primary();
