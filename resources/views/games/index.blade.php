@@ -12,6 +12,7 @@
         <table class="table">
             <thead class="thead-dark">
                 <tr>
+                    <th>Genre</th>
                     <th>ID</th>
                     <th>Game</th>
                     <th>Platform</th>
@@ -21,6 +22,7 @@
             <tbody>
                 @foreach($games as $game) {{-- in deze loop worden alle rijen (records) gemaakt die in de database zijn gevonden. --}}
                     <tr>
+                        <td>{{ $game->genre }}</td>
                         <td>{{ $game->id }}</td>
                         <td>{{ $game->game_name }}</td>
                         <td>{{ $game->platform }}</td>
