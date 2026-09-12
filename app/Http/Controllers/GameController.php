@@ -3,63 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Models\Game;
-
-
 use Illuminate\Http\Request;
 
 class GameController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-  public function index()
-{
-    $games = Game::all();
-    return view('games.index', compact('games'));
-}
+    public function index()
+    {
+        $games = Game::all();
+        return view('games.index', compact('games'));
+    }
 
     public function create()
     {
-        //
+        return view('games.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'game_name' => 'required',
+            'platform' => 'required',
+            'genre' => 'required',
+            'rating' => 'required|numeric|min:0|max:10'
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        $game = new Game([
+            'game_name' => $request->get('game_name'),
+            'platform' => $request->get('platform'),
+            'genre' => $request->get('genre'),
+            'rating' => $request->get('rating')
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        $game->save();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect('/games')->with('success', 'Game added!');
     }
 }
