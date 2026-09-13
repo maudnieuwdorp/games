@@ -7,20 +7,17 @@ use App\Models\Game;
 
 class GameController extends Controller
 {
-    // Toon het overzicht van alle games
     public function index()
     {
         $games = Game::all();
         return view('games.index', ['games' => $games]);
     }
 
-    // Toon het formulier om een nieuwe game toe te voegen
     public function create()
     {
         return view('games.create');
     }
 
-    // Sla een nieuwe game op
     public function store(Request $request)
     {
         $request->validate([
@@ -42,14 +39,12 @@ class GameController extends Controller
         return redirect('/games')->with('success', 'Game added!');
     }
 
-    // Toon het formulier om een bestaande game te bewerken
     public function edit($id)
     {
         $game = Game::find($id);
         return view('games.edit', ['game' => $game]);
     }
 
-    // Werk een bestaande game bij
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -66,6 +61,13 @@ class GameController extends Controller
         $game->rating = $request->get('rating');
         $game->save();
 
+        return redirect('/games');
+    }
+
+    public function destroy($id)
+    {
+        $game = Game::find($id);
+        $game->delete();
         return redirect('/games');
     }
 }
