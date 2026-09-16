@@ -35,7 +35,7 @@
                     <td>{{ $game->rating }}</td>
                     <td>
                         <a href="/games/edit/{{ $game->id }}" class="btn btn-primary btn-sm">Edit</a>
-                    </td>
+                        <a href="{{ route('games.show', ['id' => $game->id]) }}" class="btn btn-info">Show</a></td>
                     <td>
                         <form action="/games/destroy/{{ $game->id }}" method="post">
                             @csrf
