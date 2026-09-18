@@ -35,3 +35,7 @@ Route::post('games/destroy/{id}', [GameController::class, 'destroy']);
 
 Route::get('/games/show/{id}', [GameController::class, 'show'])->name('games.show');
 Route::get('/games', [GameController::class, 'index'])->name('games.index');
+
+Route::get('/geheim', function () {
+    return view('geheim');
+})->middleware('auth');
