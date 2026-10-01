@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\RolePermissionController;
+use App\Http\Controllers\Admin\UserRoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,4 +63,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('beheer')->name('admin.')->gro
     Route::get('rol-permissies/{roleId}/{permissionId}/edit', [RolePermissionController::class, 'edit'])->name('role-permissions.edit');
     Route::put('rol-permissies/{roleId}/{permissionId}', [RolePermissionController::class, 'update'])->name('role-permissions.update');
     Route::delete('rol-permissies/{roleId}/{permissionId}', [RolePermissionController::class, 'destroy'])->name('role-permissions.destroy');
+    Route::get('gebruiker-rollen', [UserRoleController::class, 'index'])->name('user-roles.index');
+    Route::post('gebruiker-rollen', [UserRoleController::class, 'store'])->name('user-roles.store');
+    Route::get('gebruiker-rollen/{userId}/{roleId}/edit', [UserRoleController::class, 'edit'])->name('user-roles.edit');
+    Route::put('gebruiker-rollen/{userId}/{roleId}', [UserRoleController::class, 'update'])->name('user-roles.update');
+    Route::delete('gebruiker-rollen/{userId}/{roleId}', [UserRoleController::class, 'destroy'])->name('user-roles.destroy');
 });

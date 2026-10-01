@@ -7,6 +7,7 @@
         <a class="btn btn-outline-secondary" href="{{ route('admin.permissies.index') }}">Permissies</a>
         <a class="btn btn-outline-secondary" href="{{ route('admin.rollen.index') }}">Rollen</a>
         <a class="btn btn-outline-secondary" href="{{ route('admin.role-permissions.index') }}">Permissies per rol</a>
+        <a class="btn btn-outline-secondary" href="{{ route('admin.user-roles.index') }}">Rollen per gebruiker</a>
     </nav>
 
     @if (session('status'))
