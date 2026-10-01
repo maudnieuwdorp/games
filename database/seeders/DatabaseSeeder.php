@@ -2,24 +2,35 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $admin = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
+        $klant = Role::firstOrCreate(['name' => 'klant', 'guard_name' => 'web']);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // Permissies aanmaken
+        $permissions = [
+            'game bekijken',
+            'game invoeren',
+            'game bewerken',
+            'game verwijderen',
+        ];
+
+        $permissionModels = array_map(static function (string $name): Permission {
+            return Permission::firstOrCreate(['name' => $name, 'guard_name' => 'web']);
+        }, $permissions);
+
+        $admin->syncPermissions($permissionModels);
+        $klant->syncPermissions(['game bekijken']);
+
+        User::doesntHave('roles')->each(static function (User $user) use ($klant): void {
+            $user->assignRole($klant);
+        });
     }
 }
