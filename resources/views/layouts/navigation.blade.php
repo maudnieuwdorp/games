@@ -12,9 +12,34 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <!-- Dashboard -->
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    <!-- Games -->
+                    <x-nav-link :href="route('games.index')" :active="request()->routeIs('games.*')">
+                        {{ __('Games') }}
+                    </x-nav-link>
+
+                    <!-- Beheeromgeving (Alleen zichtbaar voor admin) -->
+                    @role('admin')
+                        <x-nav-link :href="route('admin.permissies.index')" :active="request()->routeIs('admin.permissies.*')">
+                            {{ __('Permissies') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('admin.rollen.index')" :active="request()->routeIs('admin.rollen.*')">
+                            {{ __('Rollen') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('admin.role-permissions.index')" :active="request()->routeIs('admin.role-permissions.*')">
+                            {{ __('Rol-Permissies') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('admin.user-roles.index')" :active="request()->routeIs('admin.user-roles.*')">
+                            {{ __('Gebruiker-Rollen') }}
+                        </x-nav-link>
+                    @endrole
                 </div>
             </div>
 
@@ -64,12 +89,34 @@
         </div>
     </div>
 
-    <!-- Responsive Navigation Menu -->
+    <!-- Responsive Navigation Menu (Mobiel) -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('games.index')" :active="request()->routeIs('games.*')">
+                {{ __('Games') }}
+            </x-responsive-nav-link>
+
+            @role('admin')
+                <x-responsive-nav-link :href="route('admin.permissies.index')" :active="request()->routeIs('admin.permissies.*')">
+                    {{ __('Permissies') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('admin.rollen.index')" :active="request()->routeIs('admin.rollen.*')">
+                    {{ __('Rollen') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('admin.role-permissions.index')" :active="request()->routeIs('admin.role-permissions.*')">
+                    {{ __('Rol-Permissies') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('admin.user-roles.index')" :active="request()->routeIs('admin.user-roles.*')">
+                    {{ __('Gebruiker-Rollen') }}
+                </x-responsive-nav-link>
+            @endrole
         </div>
 
         <!-- Responsive Settings Options -->
