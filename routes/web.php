@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,5 +52,8 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'role:admin'])->prefix('beheer')->name('admin.')->group(function () {
     Route::resource('permissies', PermissionController::class)
         ->parameters(['permissies' => 'permissie'])
+        ->except(['show']);
+    Route::resource('rollen', RoleController::class)
+        ->parameters(['rollen' => 'rol'])
         ->except(['show']);
 });
