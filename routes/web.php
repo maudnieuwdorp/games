@@ -5,6 +5,7 @@ use App\Http\Controllers\GameController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\RolePermissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,4 +57,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('beheer')->name('admin.')->gro
     Route::resource('rollen', RoleController::class)
         ->parameters(['rollen' => 'rol'])
         ->except(['show']);
+    Route::get('rol-permissies', [RolePermissionController::class, 'index'])->name('role-permissions.index');
+    Route::post('rol-permissies', [RolePermissionController::class, 'store'])->name('role-permissions.store');
+    Route::get('rol-permissies/{roleId}/{permissionId}/edit', [RolePermissionController::class, 'edit'])->name('role-permissions.edit');
+    Route::put('rol-permissies/{roleId}/{permissionId}', [RolePermissionController::class, 'update'])->name('role-permissions.update');
+    Route::delete('rol-permissies/{roleId}/{permissionId}', [RolePermissionController::class, 'destroy'])->name('role-permissions.destroy');
 });
