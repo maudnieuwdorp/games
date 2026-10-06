@@ -30,20 +30,27 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    // Games: Beheren (Alleen Admin)
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/games/create', [GameController::class, 'create'])->name('games.create');
+        Route::post('/games', [GameController::class, 'store'])->name('games.store');
+        Route::post('/games/store', [GameController::class, 'store']);
+        
+        // Routes afgestemd op je knoppen (/games/edit/1 en /games/destroy/1)
+        Route::get('/games/edit/{game}', [GameController::class, 'edit'])->name('games.edit');
+        Route::put('/games/update/{game}', [GameController::class, 'update'])->name('games.update');
+        Route::post('/games/update/{game}', [GameController::class, 'update']);
+        
+        Route::delete('/games/destroy/{game}', [GameController::class, 'destroy'])->name('games.destroy');
+        Route::post('/games/destroy/{game}', [GameController::class, 'destroy']);
+    });
+
     // Games: Bekijken (Klant + Admin)
     Route::middleware(['role:klant|admin'])->group(function () {
         Route::get('/games', [GameController::class, 'index'])->name('games.index');
         Route::get('/games/{game}', [GameController::class, 'show'])->name('games.show');
     });
 
-    // Games: Beheren (Alleen Admin)
-    Route::middleware(['role:admin'])->group(function () {
-        Route::get('/games/create', [GameController::class, 'create'])->name('games.create');
-        Route::post('/games', [GameController::class, 'store'])->name('games.store');
-        Route::get('/games/{game}/edit', [GameController::class, 'edit'])->name('games.edit');
-        Route::put('/games/{game}', [GameController::class, 'update'])->name('games.update');
-        Route::delete('/games/{game}', [GameController::class, 'destroy'])->name('games.destroy');
-    });
 });
 
 // Admin Beheeromgeving (Spatie Rollen & Permissies)
@@ -69,7 +76,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('beheer')->name('admin.')->gro
     // 4. Rol koppelen aan Gebruiker (model_has_roles)
     Route::get('gebruiker-rollen', [UserRoleController::class, 'index'])->name('user-roles.index');
     Route::post('gebruiker-rollen', [UserRoleController::class, 'store'])->name('user-roles.store');
-    Route::get('gebruiker-rollen/{userId}/{roleId}/edit', [UserRoleController::class, 'edit'])->name('user-roles.edit');
+    Route::get('gebruiker-rollen/{userId}/{roleId}/edit', [UserRoleController::class, 'edit'])->name('user-roles.edit'); // <-- HIER IS DE ROUTENAAM GECORRIGEERD
     Route::put('gebruiker-rollen/{userId}/{roleId}', [UserRoleController::class, 'update'])->name('user-roles.update');
     Route::delete('gebruiker-rollen/{userId}/{roleId}', [UserRoleController::class, 'destroy'])->name('user-roles.destroy');
 });
